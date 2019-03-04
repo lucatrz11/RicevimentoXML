@@ -14,18 +14,18 @@ public class docente {
     private int id;
     private String docente;
     private String giorno;
-    private int ora;
+    private String ora;
     private String note;
 
     public docente() {
         id = 0;
         docente = "";
         giorno = "";
-        ora = 0;
+        ora = "";
         note = "";
     }
 
-    public docente(int id, String docente, String giorno, int ora, String note) {
+    public docente(int id, String docente, String giorno, String ora, String note) {
         this.id = id;
         this.docente = docente;
         this.giorno = giorno;
@@ -57,11 +57,11 @@ public class docente {
         this.giorno = giorno;
     }
 
-    public int getOra() {
+    public String getOra() {
         return ora;
     }
 
-    public void setOra(int ora) {
+    public void setOra(String ora) {
         this.ora = ora;
     }
 

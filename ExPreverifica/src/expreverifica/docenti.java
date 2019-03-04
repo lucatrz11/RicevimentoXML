@@ -27,7 +27,7 @@ public class docenti {
         }
     }
 
-    public void genera(int id, String docente, String giorno, int ora, String note) {
+    public void genera(int id, String docente, String giorno, String ora, String note) {
         for (int i = 0; i < listaDocente.length; i++) {
             docente d = new docente();
             listaDocente[0].setId(id);

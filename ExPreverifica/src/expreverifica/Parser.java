@@ -23,27 +23,29 @@ import org.xml.sax.SAXException;
  */
 public class Parser {
 
-    private docenti doc = new docenti();
+    public static docente[] listaDocenti;
     private String giorno;
+    private int numEl;
 
     public Parser() {
-        doc = new docenti();
+        listaDocenti = new docente[100];
     }
 
     public Parser(String giorno) {
         this.giorno = giorno;
+        listaDocenti = new docente[100];
     }
 
-    public docenti parseDocument(String filename) throws ParserConfigurationException, SAXException, IOException {
+    public docente[] parseDocument(String filename) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
         Document document;
-        Element root, element;
+        Element root, element, tagTd;
         NodeList nodelist;
-        int j = 0;
+        NodeList nodelist2;
 
         //Sportello sportello;
-        boolean trovato = false;
+        //boolean trovato = false;
         // creazione dell’albero DOM dal documento XML
         factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
@@ -55,45 +57,68 @@ public class Parser {
             for (int i = 0; i < nodelist.getLength(); i++) {
                 element = (Element) nodelist.item(i);
                 String contenuto = element.getFirstChild().getTextContent();
-                if (contenuto != null) {
-                    if (contenuto.equals(giorno) && element.getChildNodes().getLength() == 4) {
-                        doc.generaId(i);
-                        trovato = true;
-                    } else {
-                        trovato = false;
+                nodelist2 = element.getElementsByTagName("td");
+                if (nodelist2 != null && nodelist2.getLength() == 5) {
+                    tagTd = (Element) nodelist2.item(2);
+                    String giornoTd = tagTd.getTextContent();
+                    if (giornoTd.equals(giorno)) {
+                        int id = Integer.parseInt(((Element) nodelist2.item(0)).getTextContent());
+                        String nomeDocente = ((Element) nodelist2.item(1)).getTextContent();
+                        String giornoD = ((Element) nodelist2.item(2)).getTextContent();
+                        String ora = ((Element) nodelist2.item(3)).getTextContent();
+                        String note = ((Element) nodelist2.item(4)).getTextContent();
+                        docente doc = new docente(id, nomeDocente, giornoD, ora, note);
+                        listaDocenti[numEl] = doc;
+                        numEl++;
+
                     }
+
                 }
-            } 
+
+//                if (contenuto != null) {
+//                    if (contenuto.equals(giorno) && element.getChildNodes().getLength() == 4) {
+//                        doc.generaId(i);
+//                        //trovato = true;
+//                    } else {
+//                        //trovato = false;
+//                    }
+//                }
+            }
+
         }
-         return doc;
+        return listaDocenti;
     }
 
-    public List toCSV(List testo) {
+    public docente[] toCSV(docente[] doc) {
 
-        List lista1 = new ArrayList();
-
-        lista1 = getText((NodeList) testo.get(0), "td");
-
-        String stringa = "";
-
-        stringa += lista1.get(0) + ";";
-        stringa += lista1.get(1) + ";";
-        stringa += lista1.get(2) + ";";
-        stringa += lista1.get(3) + "\r\n";
-
-        List lista2 = new ArrayList();
-        for (int i = 1; i < testo.size() - 1; i = i + 2) {
-
-            lista1 = getText((NodeList) testo.get(i), "td");
-            lista2 = getText((NodeList) testo.get(i + 1), "td");
-
-            stringa += lista1.get(0) + " " + lista2.get(0) + ";";
-            stringa += lista1.get(1) + " " + lista2.get(1) + ";";
-            stringa += lista1.get(2) + " " + lista2.get(2) + ";";
-            stringa += lista1.get(3) + " " + lista2.get(3) + "\n";
+//        List lista1 = new ArrayList();
+//
+//        lista1 = getText((NodeList) testo.get(0), "td");
+//
+//        String stringa = "";
+//
+//        stringa += lista1.get(0) + ";";
+//        stringa += lista1.get(1) + ";";
+//        stringa += lista1.get(2) + ";";
+//        stringa += lista1.get(3) + "\r\n";
+//
+//        List lista2 = new ArrayList();
+        for (int i = 0; i < listaDocenti.length; i++) {
+                int id= listaDocenti[i].getId();
+                String nome= listaDocenti[i].getDocente();
+                String g= listaDocenti[i].getGiorno();
+                String ora= listaDocenti[i].getOra();
+                String note= listaDocenti[i].getNote();
+//            lista1 = getText((NodeList) testo.get(i), "td");
+//            lista2 = getText((NodeList) testo.get(i + 1), "td");
+//
+//            stringa += lista1.get(0) + " " + lista2.get(0) + ";";
+//            stringa += lista1.get(1) + " " + lista2.get(1) + ";";
+//            stringa += lista1.get(2) + " " + lista2.get(2) + ";";
+//            stringa += lista1.get(3) + " " + lista2.get(3) + "\n";
         }
 
-        return stringa;
+        return listaDocenti;
     }
 
     public List getText(NodeList nodelist, String tag) {

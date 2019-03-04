@@ -5,7 +5,9 @@
  */
 package expreverifica;
 
+import static expreverifica.Parser.listaDocenti;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import javax.xml.parsers.ParserConfigurationException;
@@ -23,18 +25,31 @@ public class ExPreverifica {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Scanner input = new Scanner(System.in);
-        docenti doc = new docenti();
-        
+
+        // docente[] listaDocenti=new docente[200];
         System.out.println("Scrivi un giorno: ");
         String giorno = input.nextLine();
-        Parser dom = new Parser(giorno);
+        giorno=giorno.replaceAll("i","ì");
+        //Parser dom1 = new Parser(giorno);
+        expreverifica.Parser dom = new expreverifica.Parser(giorno);
         try {
-            doc = dom.parseDocument("ricevimento.xml");
+            Parser.listaDocenti = dom.parseDocument("ricevimento.xml");
+
+            System.out.println();
         } catch (ParserConfigurationException | SAXException | IOException exception) {
             System.out.println("Errore!");
         }
-        //String s = dom.toCSV(sportello);
-        
+//        for (int i = 0; i < listaDocenti.length; i++) {
+//            int id = listaDocenti[i].getId();
+//            String nome = listaDocenti[i].getDocente();
+//            String g = listaDocenti[i].getGiorno();
+//            String ora = listaDocenti[i].getOra();
+//            String note = listaDocenti[i].getNote();
+//            System.out.println(id +" "+ nome +" "+ g +" "+ ora +" "+ note);
+            System.out.println(Arrays.toString(listaDocenti));
+            //String s = dom.toCSV(sportello);
+
+        }
     }
-    
-}
+
+
