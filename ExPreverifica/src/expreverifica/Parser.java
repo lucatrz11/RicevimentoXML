@@ -44,8 +44,6 @@ public class Parser {
         NodeList nodelist;
         NodeList nodelist2;
 
-        //Sportello sportello;
-        //boolean trovato = false;
         // creazione dell’albero DOM dal documento XML
         factory = DocumentBuilderFactory.newInstance();
         builder = factory.newDocumentBuilder();
