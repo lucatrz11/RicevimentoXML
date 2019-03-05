@@ -75,14 +75,6 @@ public class Parser {
 
                 }
 
-//                if (contenuto != null) {
-//                    if (contenuto.equals(giorno) && element.getChildNodes().getLength() == 4) {
-//                        doc.generaId(i);
-//                        //trovato = true;
-//                    } else {
-//                        //trovato = false;
-//                    }
-//                }
             }
 
         }
@@ -104,11 +96,11 @@ public class Parser {
 //
 //        List lista2 = new ArrayList();
         for (int i = 0; i < listaDocenti.length; i++) {
-                int id= listaDocenti[i].getId();
-                String nome= listaDocenti[i].getDocente();
-                String g= listaDocenti[i].getGiorno();
-                String ora= listaDocenti[i].getOra();
-                String note= listaDocenti[i].getNote();
+            int id = listaDocenti[i].getId();
+            String nome = listaDocenti[i].getDocente();
+            String g = listaDocenti[i].getGiorno();
+            String ora = listaDocenti[i].getOra();
+            String note = listaDocenti[i].getNote();
 //            lista1 = getText((NodeList) testo.get(i), "td");
 //            lista2 = getText((NodeList) testo.get(i + 1), "td");
 //

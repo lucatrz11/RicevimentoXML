@@ -29,7 +29,7 @@ public class ExPreverifica {
         // docente[] listaDocenti=new docente[200];
         System.out.println("Scrivi un giorno: ");
         String giorno = input.nextLine();
-        giorno=giorno.replaceAll("i","ì");
+        giorno = giorno.replaceAll("i", "ì");
         //Parser dom1 = new Parser(giorno);
         expreverifica.Parser dom = new expreverifica.Parser(giorno);
         try {
@@ -39,17 +39,7 @@ public class ExPreverifica {
         } catch (ParserConfigurationException | SAXException | IOException exception) {
             System.out.println("Errore!");
         }
-//        for (int i = 0; i < listaDocenti.length; i++) {
-//            int id = listaDocenti[i].getId();
-//            String nome = listaDocenti[i].getDocente();
-//            String g = listaDocenti[i].getGiorno();
-//            String ora = listaDocenti[i].getOra();
-//            String note = listaDocenti[i].getNote();
-//            System.out.println(id +" "+ nome +" "+ g +" "+ ora +" "+ note);
-            System.out.println(Arrays.toString(listaDocenti));
-            //String s = dom.toCSV(sportello);
 
-        }
+        System.out.println(Arrays.toString(listaDocenti));
     }
-
-
+}
