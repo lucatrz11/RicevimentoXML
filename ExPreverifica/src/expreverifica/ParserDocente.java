@@ -21,21 +21,21 @@ import org.xml.sax.SAXException;
  *
  * @author trezzi_luca
  */
-public class Parser {
+public class ParserDocente {
 
-    public static docente[] listaDocenti;
-    private String giorno;
+    public static docente docente;
+    private String docScelto;
     private int numEl;
 
-    public Parser() {
+    public ParserDocente() {
     }
 
-    public Parser(String giorno) {
-        this.giorno = giorno;
-        listaDocenti = new docente[100];
+    public ParserDocente(String docScelto) {
+        this.docScelto = docScelto;
+        docente = new docente();
     }
 
-    public docente[] parseDocument(String filename) throws ParserConfigurationException, SAXException, IOException {
+    public docente parseDocument(String filename) throws ParserConfigurationException, SAXException, IOException {
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
         Document document;
@@ -56,23 +56,53 @@ public class Parser {
                 String contenuto = element.getFirstChild().getTextContent();
                 nodelist2 = element.getElementsByTagName("td");
                 if (nodelist2 != null && nodelist2.getLength() == 5) {
-                    tagTd = (Element) nodelist2.item(2);
-                    String giornoTd = tagTd.getTextContent();
-                    if (giornoTd.equals(giorno)) {
+                    tagTd = (Element) nodelist2.item(1);
+                    String docTd = tagTd.getTextContent();
+                    if (docTd.equals(docScelto)) {
                         int id = Integer.parseInt(((Element) nodelist2.item(0)).getTextContent());
                         String nomeDocente = ((Element) nodelist2.item(1)).getTextContent();
                         String giornoD = ((Element) nodelist2.item(2)).getTextContent();
                         String ora = ((Element) nodelist2.item(3)).getTextContent();
                         String note = ((Element) nodelist2.item(4)).getTextContent();
-                        docente doc = new docente(id, nomeDocente, giornoD, ora, note);
-                        listaDocenti[numEl] = doc;
-                        numEl++;
+                        docente = new docente(id, nomeDocente, giornoD, ora, note);
                     }
                 }
             }
         }
-        return listaDocenti;
+        return docente;
     }
+
+//    public docente[] toCSV(docente[] doc) {
+//
+//        List lista1 = new ArrayList();
+//
+//        lista1 = getText((NodeList) testo.get(0), "td");
+//
+//        String stringa = "";
+//
+//        stringa += lista1.get(0) + ";";
+//        stringa += lista1.get(1) + ";";
+//        stringa += lista1.get(2) + ";";
+//        stringa += lista1.get(3) + "\r\n";
+//
+//        List lista2 = new ArrayList();
+//        for (int i = 0; i < listaDocenti.length; i++) {
+//            int id = listaDocenti[i].getId();
+//            String nome = listaDocenti[i].getDocente();
+//            String g = listaDocenti[i].getGiorno();
+//            String ora = listaDocenti[i].getOra();
+//            String note = listaDocenti[i].getNote();
+//            lista1 = getText((NodeList) testo.get(i), "td");
+//            lista2 = getText((NodeList) testo.get(i + 1), "td");
+//
+//            stringa += lista1.get(0) + " " + lista2.get(0) + ";";
+//            stringa += lista1.get(1) + " " + lista2.get(1) + ";";
+//            stringa += lista1.get(2) + " " + lista2.get(2) + ";";
+//            stringa += lista1.get(3) + " " + lista2.get(3) + "\n";
+//        }
+//
+//        return listaDocenti;
+//    }
 
     public List getText(NodeList nodelist, String tag) {
         List testo = new ArrayList();

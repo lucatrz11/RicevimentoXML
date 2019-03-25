@@ -75,7 +75,7 @@ public class docente {
 
     public String toString() {
         String s = "";
-        s += id + "," + docente + "," + giorno + "," + ora + "," + note;
+        s += id + "," + docente + "," + giorno + "," + ora + "," + note+"\n\r";
         return s;
     }
 

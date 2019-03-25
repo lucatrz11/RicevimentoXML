@@ -25,7 +25,9 @@ public class ExPreverifica {
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
         Scanner input = new Scanner(System.in);
-        expreverifica.Parser dom=new expreverifica.Parser();
+        myFile mioF = new myFile();
+        Parser dom = new Parser();
+        ParserDocente domDoc = new ParserDocente();
         // docente[] listaDocenti=new docente[200];
         String giorno = "";
         String doc = "";
@@ -39,18 +41,29 @@ public class ExPreverifica {
         } else if ("docente".equals(decisione)) {
             System.out.println("Scegli il docente: ");
             doc = input.nextLine();
+            domDoc = new expreverifica.ParserDocente(doc);
         }
 
         //Parser dom1 = new Parser(giorno);
-        
         try {
-            Parser.listaDocenti = dom.parseDocument("ricevimento.xml");
+            if ("giorno".equals(decisione)) {
+                Parser.listaDocenti = dom.parseDocument("ricevimento.xml");
 
-            System.out.println();
+                System.out.println();
+                System.out.println(Arrays.toString(listaDocenti));
+                mioF.SalvaSuFile(Arrays.toString(listaDocenti));
+                mioF.SalvaSuFile(Arrays.toString(listaDocenti));
+            } else if ("docente".equals(decisione)) {
+                ParserDocente.docente = domDoc.parseDocument("ricevimento.xml");
+
+                System.out.println();
+                System.out.println(ParserDocente.docente);
+                 mioF.SalvaSuFile(ParserDocente.docente.toString());
+            }
+
         } catch (ParserConfigurationException | SAXException | IOException exception) {
             System.out.println("Errore!");
         }
 
-        System.out.println(Arrays.toString(listaDocenti));
     }
 }
