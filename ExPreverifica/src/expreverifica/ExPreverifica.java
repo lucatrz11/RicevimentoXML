@@ -24,10 +24,12 @@ public class ExPreverifica {
      */
     public static void main(String[] args) throws IOException {
         // TODO code application logic here
+        docente[] listaDocenti;
+        docente docente;
         Scanner input = new Scanner(System.in);
         myFile mioF = new myFile();
         Parser dom = new Parser();
-        ParserDocente domDoc = new ParserDocente();
+        Parser domDoc = new Parser();
         // docente[] listaDocenti=new docente[200];
         String giorno = "";
         String doc = "";
@@ -37,28 +39,24 @@ public class ExPreverifica {
             System.out.println("Scegli un giorno: ");
             giorno = input.nextLine();
             giorno = giorno.replaceAll("i", "ì");
-            dom = new expreverifica.Parser(giorno);
+            dom = new expreverifica.Parser(giorno, "");
         } else if ("docente".equals(decisione)) {
             System.out.println("Scegli il docente: ");
             doc = input.nextLine();
-            domDoc = new expreverifica.ParserDocente(doc);
+            doc.toUpperCase();
+            domDoc = new expreverifica.Parser("", doc);
         }
-
-        //Parser dom1 = new Parser(giorno);
         try {
             if ("giorno".equals(decisione)) {
-                Parser.listaDocenti = dom.parseDocument("ricevimento.xml");
-
+                listaDocenti = dom.parseDocument("ricevimento.xml");
                 System.out.println();
                 System.out.println(Arrays.toString(listaDocenti));
                 mioF.SalvaSuFile(Arrays.toString(listaDocenti));
-                mioF.SalvaSuFile(Arrays.toString(listaDocenti));
             } else if ("docente".equals(decisione)) {
-                ParserDocente.docente = domDoc.parseDocument("ricevimento.xml");
-
+                docente = domDoc.parseDocumentDoc("ricevimento.xml");
                 System.out.println();
-                System.out.println(ParserDocente.docente);
-                 mioF.SalvaSuFile(ParserDocente.docente.toString());
+                System.out.println(docente.toString());
+                mioF.SalvaSuFile(docente.toString());
             }
 
         } catch (ParserConfigurationException | SAXException | IOException exception) {
